@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
@@ -37,11 +38,21 @@ public class Levi : MonoBehaviour
     float stepLength;
     float u, v;  // random gaussian values
 
+    // List to save all the points to to draw them
+    LineRenderer lr;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rand = new System.Random();
+        lr = gameObject.GetComponentInChildren<LineRenderer>();
+        if (lr == null) {
+            Debug.LogError("No LineRenderer found as a child of Levi.");
+            return;
+        }
+        lr.positionCount++;
+        print(lr.positionCount);
+        lr.SetPosition(lr.positionCount - 1, transform.position);
     }
 
 
@@ -50,8 +61,8 @@ public class Levi : MonoBehaviour
     {
         timePassed += Time.deltaTime;
         if (timePassed >= simulationTime) {
-            ComputeLevyFlight();
             timePassed = 0;
+            ComputeLevyFlight();
         }
     }
 
@@ -80,6 +91,10 @@ public class Levi : MonoBehaviour
 
         // 4. apply transform 
         transform.position = UnityEngine.Vector2.MoveTowards(curPosition, newPosition, 10);
+
+        // (5. draw line)
+        lr.positionCount++;
+        lr.SetPosition(lr.positionCount - 1, transform.position);
     }
 
 
