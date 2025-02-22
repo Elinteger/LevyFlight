@@ -5,6 +5,9 @@ using UnityEngine;
 
 /*
 a "just for fun" implementation of Lévy flight --- https://en.wikipedia.org/wiki/L%C3%A9vy_flight
+TODO: for the future
+- add collision detection with walls (simulate actual walking)
+- optimize resource-wise
 */
 
 public class Levi : MonoBehaviour
@@ -78,6 +81,7 @@ public class Levi : MonoBehaviour
 		// only take a step into a direction that is inside the camera's fov
 		do {
 			/// start
+			// FIXME:
 			// everything inbetween start and end is bad performancewise, but its a fast workaround to stop edge cases in which it would freeze
 			// freezes because step size is so big, it cant go anywhere
 
